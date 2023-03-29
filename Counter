@@ -1,0 +1,28 @@
+Counter Game Code
+Yes, you don't have to use exploits to get a hold of a game its opensource.
+
+local Player = game.Players.LocalPlayer
+local leaderstats = Player:WaitForChild("leaderstats")
+ 
+local cash = leaderstats:WaitForChild('Cash') -- Change to Your Stats Name
+ 
+ 
+local abbreviations = {"", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp"}
+ 
+function FormatCash(value, idp)
+    local ex = math.floor(math.log(math.max(1, math.abs(value)),1000))
+    local abbrevs = abbreviations [1 + ex] or ("e+"..ex)
+    local normal = math.floor(value * ((10 ^ idp) / (1000 ^ ex))) / (10 ^ idp)
+ 
+    return ("%."..idp.."f%s"):format(normal, abbrevs)
+end
+ 
+ 
+script.Parent.Text = FormatCash(cash.Value, 1) 
+ 
+cash:GetPropertyChangedSignal("Value"):Connect(function()
+    script.Parent.Text = FormatCash(cash.Value, 1) 
+end)
+ 
+ 
+simple 
